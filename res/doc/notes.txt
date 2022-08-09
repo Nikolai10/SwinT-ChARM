@@ -1,0 +1,12 @@
+## Technical Differences
+
+In comparison to Zhu et al.:
+
+- we keep LPR (lrp_transforms) -> no motivation given for removal.
+- for CC, LPR we keep the approach described in Minnen et al., Appendix A.; i.e. 
+the input to slice_1 is 320, input to slice_2 is 352 etc. rather than 32, 64, 
+... as described in Zhu et al. Appendix A, Figure 12.
+
+Further technical deviations are possible, as we base our work on the official 
+TF implementation of Minnen et al., while Zhu et al. base their work on an
+unknown (possibly not publicly available) PyTorch reimplementation.  
