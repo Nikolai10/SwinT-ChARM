@@ -1,6 +1,6 @@
 # SwinT-ChARM (TensorFlow 2)
 
-[<img src="https://colab.research.google.com/assets/colab-badge.svg" align="center">](https://colab.research.google.com/drive/1V-2yrtyrFJLLHHibq6p_EHV4j5wxezIQ#scrollTo=15459hLADVL3)
+[<img src="https://colab.research.google.com/assets/colab-badge.svg" align="center">](https://colab.research.google.com/drive/1V-2yrtyrFJLLHHibq6p_EHV4j5wxezIQ?usp=sharing)
 
 This repository provides a TensorFlow implementation of SwinT-ChARM based on:
 
