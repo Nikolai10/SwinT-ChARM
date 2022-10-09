@@ -1,6 +1,6 @@
 # SwinT-ChARM (TensorFlow 2)
 
-[<img src="https://colab.research.google.com/assets/colab-badge.svg" align="center">](https://colab.research.google.com/drive/1V-2yrtyrFJLLHHibq6p_EHV4j5wxezIQ?usp=sharing)
+[<img src="https://colab.research.google.com/assets/colab-badge.svg" align="center">](TODO)
 
 This repository provides a TensorFlow implementation of SwinT-ChARM based on:
 
@@ -11,6 +11,17 @@ This repository provides a TensorFlow implementation of SwinT-ChARM based on:
 <sup>
 [Source](https://openreview.net/pdf?id=IDwN6xjHnK8)
 </sup>
+
+## Updates
+
+***10/09/2022***
+
+1. The number of model parameters now corresponds exactly to the reported number (32.6 million). We thank the authors for providing us with the official DeepSpeed log files.
+2. SwinT-ChARM now supports compression at different input resolutions (multiples of 256).
+
+***08/17/2022***
+
+1. Initial release of this project (see branch *release_08/17/2022*)
 
 ## Acknowledgment
 This project is based on:

@@ -1,5 +1,7 @@
 ## Technical Differences
 
+IMPORTANT: only affects branch release_08/17/2022 (the differences have been resolved!)
+
 In comparison to Zhu et al.:
 
 - we keep LPR (lrp_transforms) -> no motivation given for removal.

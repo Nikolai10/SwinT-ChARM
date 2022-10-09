@@ -1,11 +1,12 @@
 Changelog to https://github.com/sayakpaul/swin-transformers-tf
 
 - swin-transformers-tf/swins/layers: patch_splitting.py added
+- swin-transformers-tf/swins/layers: patch_merging.py modified
 - swin_transformers-tf/swins/blocks: stage_block.py modified
+- swin_transformers-tf/swins/blocks: swin_transformer_block.py modified
 - swin_transformers-tf/swins/layers: __init__.py modified
-- swin_transformers-tf/swins/layers: window_attn.py modified (l. 140)*
+- swin_transformers-tf/swins/layers: window_attn.py modified
 
-*changed x = tf.reshape(x, (B_, N, -1)) to x = tf.reshape(x, (B_, N, C))
-
-note: this is identical to the original implementation:
-https://github.com/microsoft/Swin-Transformer/blob/main/models/swin_transformer.py#L153
+General comments:
+- enabled support of arbitrary input shapes (multiples of 256).
+- replaced numpy-based attention mask calculation with a native TensorFlow equivalent.

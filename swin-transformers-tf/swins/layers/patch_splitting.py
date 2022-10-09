@@ -22,25 +22,19 @@ from tensorflow.keras import layers as L
 class PatchSplitting(L.Layer):
     """Patch Splitting Layer as described in 
     https://openreview.net/pdf?id=IDwN6xjHnK8 (section 3.1)
-
     # Patch Split = [Linear, LayerNorm, Depth-to-Space (for upsampling)]
-
     Args:
-        input_resolution (tuple[int]): Resolution of input feature.
         dim (int): Number of input channels.
     """
 
     def __init__(
-        self,
-        input_resolution,
-        dim,
-        out_dim=None,
-        norm_layer=partial(L.LayerNormalization, epsilon=1e-5),
-        **kwargs
+            self,
+            dim,
+            out_dim=None,
+            norm_layer=partial(L.LayerNormalization, epsilon=1e-5),
+            **kwargs
     ):
         super().__init__(**kwargs)
-        
-        self.input_resolution = input_resolution
         self.dim = dim
         self.out_dim = out_dim or dim
         self.norm = norm_layer()
@@ -48,17 +42,17 @@ class PatchSplitting(L.Layer):
 
     def call(self, x):
         """
-        x: B, H*W, C
+        x: B, H, W, C
         """
+        H, W, C = tf.shape(x)[1], tf.shape(x)[2], tf.shape(x)[3]
+        x = tf.reshape(x, (-1, H*W, C))
+
         x = self.reduction(x)
         x = self.norm(x)
 
-        H, W = self.input_resolution
-        B, L, C = tf.shape(x)[0], tf.shape(x)[1], tf.shape(x)[2]
-        
-        x = tf.reshape(x, (B, H, W, C))
+        x = tf.reshape(x, (-1, H, W, self.out_dim*4))
         x = tf.nn.depth_to_space(x, 2, data_format='NHWC')
-        x = tf.reshape(x, (B, 2*H*2*W, self.out_dim))
+        x = tf.reshape(x, (-1, 2*H, 2*W, self.out_dim))
 
         return x
 
@@ -66,7 +60,6 @@ class PatchSplitting(L.Layer):
         config = super().get_config()
         config.update(
             {
-                "input_resolution": self.input_resolution,
                 "dim": self.dim,
                 "out_dim": self.out_dim,
                 "norm": self.norm,

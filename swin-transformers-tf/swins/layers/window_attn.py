@@ -1,3 +1,18 @@
+# Copyright 2022 Nikolai Körber. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ==============================================================================
+
 """
 Code copied and modified from 
 https://github.com/rwightman/pytorch-image-models/blob/master/timm/models/swin_transformer.py
@@ -18,7 +33,7 @@ def get_relative_position_index(win_h, win_w):
     coords_flatten = tf.reshape(coords, [2, -1])  # [2, Wh*Ww]
 
     relative_coords = (
-        coords_flatten[:, :, None] - coords_flatten[:, None, :]
+            coords_flatten[:, :, None] - coords_flatten[:, None, :]
     )  # [2, Wh*Ww, Wh*Ww]
     relative_coords = tf.transpose(
         relative_coords, perm=[1, 2, 0]
@@ -46,15 +61,15 @@ class WindowAttention(layers.Layer):
     """
 
     def __init__(
-        self,
-        dim,
-        num_heads,
-        head_dim=None,
-        window_size=7,
-        qkv_bias=True,
-        attn_drop=0.0,
-        proj_drop=0.0,
-        **kwargs,
+            self,
+            dim,
+            num_heads,
+            head_dim=None,
+            window_size=7,
+            qkv_bias=True,
+            attn_drop=0.0,
+            proj_drop=0.0,
+            **kwargs,
     ):
 
         super().__init__(**kwargs)
@@ -102,7 +117,7 @@ class WindowAttention(layers.Layer):
         return tf.transpose(relative_position_bias, [2, 0, 1])
 
     def call(
-        self, x, mask=None, return_attns=False
+            self, x, mask=None, return_attns=False
     ) -> Union[tf.Tensor, Tuple[tf.Tensor, tf.Tensor]]:
         """
         Args:

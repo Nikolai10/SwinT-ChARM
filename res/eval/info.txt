@@ -1,0 +1,9 @@
+Kodak
+The Kodak data set is a collection of 24 images with resolution 768x512 (or 512x768).
+The images are available as PNG files here: http://r0k.us/graphics/kodak
+
+@misc{kodak,
+  title = "Kodak Lossless True Color Image Suite ({PhotoCD PCD0992})",
+  author = "Eastman Kodak",
+  url = "http://r0k.us/graphics/kodak",
+}

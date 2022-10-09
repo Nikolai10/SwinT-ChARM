@@ -20,11 +20,9 @@ https://github.com/rwightman/pytorch-image-models/blob/master/timm/models/swin_t
 
 from functools import partial
 from typing import Dict, Union
-
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers as L
-
 from .swin_transformer_block import SwinTransformerBlock
 
 
@@ -33,7 +31,6 @@ class BasicLayer(keras.Model):
 
     Args:
         dim (int): Number of input channels.
-        input_resolution (tuple[int]): Input resolution.
         depth (int): Number of blocks.
         num_heads (int): Number of attention heads.
         head_dim (int): Channels per head (dim // num_heads if not set)
@@ -49,36 +46,32 @@ class BasicLayer(keras.Model):
     """
 
     def __init__(
-        self,
-        dim,
-        out_dim,
-        input_resolution,
-        depth,
-        num_heads=4,
-        head_dim=None,
-        window_size=7,
-        mlp_ratio=4.0,
-        qkv_bias=True,
-        drop=0.0,
-        attn_drop=0.0,
-        drop_path=0.0,
-        norm_layer=partial(L.LayerNormalization, epsilon=1e-5),
-        downsample=None,
-        upsample=None,
-        **kwargs,
+            self,
+            dim,
+            out_dim,
+            depth,
+            num_heads=4,
+            head_dim=None,
+            window_size=7,
+            mlp_ratio=4.0,
+            qkv_bias=True,
+            drop=0.0,
+            attn_drop=0.0,
+            drop_path=0.0,
+            norm_layer=partial(L.LayerNormalization, epsilon=1e-5),
+            downsample=None,
+            upsample=None,
+            **kwargs,
     ):
 
         super().__init__(kwargs)
-
         self.dim = dim
-        self.input_resolution = input_resolution
         self.depth = depth
 
         # build blocks
         blocks = [
             SwinTransformerBlock(
                 dim=dim,
-                input_resolution=input_resolution,
                 num_heads=num_heads,
                 head_dim=head_dim,
                 window_size=window_size,
@@ -96,31 +89,26 @@ class BasicLayer(keras.Model):
             for i in range(depth)
         ]
         self.blocks = blocks
-
         # patch merging layer
         if downsample is not None:
             self.downsample = downsample(
-                input_resolution,
                 dim=dim,
                 out_dim=out_dim,
                 norm_layer=norm_layer,
             )
         else:
             self.downsample = None
-
         # patch splitting layer
         if upsample is not None:
             self.upsample = upsample(
-                input_resolution,
                 dim=dim,
                 out_dim=out_dim,
                 norm_layer=norm_layer,
             )
         else:
             self.upsample = None
-
     def call(
-        self, x, return_attns=False
+            self, x, return_attns=False
     ) -> Union[tf.Tensor, Dict[str, tf.Tensor]]:
         if return_attns:
             attention_scores = {}
@@ -133,7 +121,7 @@ class BasicLayer(keras.Model):
                 attention_scores.update({f"swin_block_{i}": attns})
         if self.downsample is not None:
             x = self.downsample(x)
-        
+
         if self.upsample is not None:
             x = self.upsample(x)
 
