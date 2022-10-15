@@ -38,21 +38,21 @@ class PatchSplitting(L.Layer):
         self.dim = dim
         self.out_dim = out_dim or dim
         self.norm = norm_layer()
-        self.reduction = L.Dense(self.out_dim*4, use_bias=False)
+        self.reduction = L.Dense(self.out_dim * 4, use_bias=False)
 
     def call(self, x):
         """
         x: B, H, W, C
         """
         H, W, C = tf.shape(x)[1], tf.shape(x)[2], tf.shape(x)[3]
-        x = tf.reshape(x, (-1, H*W, C))
+        x = tf.reshape(x, (-1, H * W, C))
 
         x = self.reduction(x)
         x = self.norm(x)
 
-        x = tf.reshape(x, (-1, H, W, self.out_dim*4))
+        x = tf.reshape(x, (-1, H, W, self.out_dim * 4))
         x = tf.nn.depth_to_space(x, 2, data_format='NHWC')
-        x = tf.reshape(x, (-1, 2*H, 2*W, self.out_dim))
+        x = tf.reshape(x, (-1, 2 * H, 2 * W, self.out_dim))
 
         return x
 
@@ -63,6 +63,57 @@ class PatchSplitting(L.Layer):
                 "dim": self.dim,
                 "out_dim": self.out_dim,
                 "norm": self.norm,
+            }
+        )
+        return config
+
+
+class PatchUnpack(L.Layer):
+    """Patch Unpack Layer
+    # PatchUnpack = [Linear, Depth-to-Space (for upsampling)]
+
+    Key differences to PatchSplitting:
+    - no LayerNorm
+    - use_bias=True (self.reduction)
+
+    Args:
+        input_resolution (tuple[int]): Resolution of input feature.
+        dim (int): Number of input channels.
+    """
+
+    def __init__(
+            self,
+            dim,
+            out_dim=None,
+            norm_layer=None,
+            **kwargs
+    ):
+        super().__init__(**kwargs)
+        self.dim = dim
+        self.out_dim = out_dim or dim
+        self.reduction = L.Dense(self.out_dim * 4, use_bias=True)
+
+    def call(self, x):
+        """
+        x: B, H, W, C
+        """
+        H, W, C = tf.shape(x)[1], tf.shape(x)[2], tf.shape(x)[3]
+        x = tf.reshape(x, (-1, H * W, C))
+
+        x = self.reduction(x)
+
+        x = tf.reshape(x, (-1, H, W, self.out_dim * 4))
+        x = tf.nn.depth_to_space(x, 2, data_format='NHWC')
+        x = tf.reshape(x, (-1, 2 * H, 2 * W, self.out_dim))
+
+        return x
+
+    def get_config(self):
+        config = super().get_config()
+        config.update(
+            {
+                "dim": self.dim,
+                "out_dim": self.out_dim,
             }
         )
         return config

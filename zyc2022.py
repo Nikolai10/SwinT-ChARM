@@ -56,7 +56,7 @@ import tensorflow_compression as tfc
 import tensorflow_datasets as tfds
 
 from swins.blocks import BasicLayer
-from swins.layers import PatchMerging, PatchSplitting
+from swins.layers import PatchMerging, PatchSplitting, PatchUnpack
 
 from config import ConfigGa as cfg_ga
 from config import ConfigGs as cfg_gs
@@ -118,7 +118,7 @@ class SynthesisTransform(tf.keras.Sequential):
       window_size=cfg_gs.window_size[i],
       mlp_ratio = 4.0,
       qkv_bias=True,
-      upsample=PatchSplitting,
+      upsample=PatchSplitting if i < cfg_gs.num_layers-1 else PatchUnpack,
       name=f"basic_layer_gs_{i}",
     ) for i in range(cfg_gs.num_layers)]
 
@@ -168,7 +168,7 @@ class HyperSynthesisTransform(tf.keras.Sequential):
       window_size=cfg_hs.window_size[i],
       mlp_ratio = 4.0,
       qkv_bias=True,
-      upsample=PatchSplitting,
+      upsample=PatchSplitting if i < cfg_hs.num_layers-1 else PatchUnpack,
       name=f"basic_layer_hs_{i}",
     ) for i in range(cfg_hs.num_layers)]
 

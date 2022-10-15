@@ -151,7 +151,7 @@ class SwinTransformerBlock(keras.Model):
         self.input_resolution = (H, W)
 
         if self.shift_size > 0:
-            self.img_mask = self.get_img_mask()
+            self.img_mask = tf.stop_gradient(self.get_img_mask())
             self.attn_mask = self.get_attn_mask()
 
         x = tf.reshape(x, (-1, H*W, C))
