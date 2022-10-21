@@ -36,7 +36,6 @@ unknown (possibly not publicly available) PyTorch reimplementation.
 ## Example (kodim22)
 
 Original | SwinT-ChARM (β = 0.0003)
-
 :-------------------------:|:-------------------------:
 ![kodim22.png](https://github.com/Nikolai10/SwinT-ChARM/blob/master/res/eval/kodim22.png) | ![kodim22_hat.png](https://github.com/Nikolai10/SwinT-ChARM/blob/master/res/eval/kodim22_hat.png)
 
