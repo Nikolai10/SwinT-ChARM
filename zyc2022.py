@@ -610,6 +610,8 @@ def compress(args):
     print(f"Multiscale SSIM (dB): {msssim_db:0.2f}")
     print(f"Bits per pixel: {bpp:0.4f}")
 
+    pathname, _ = os.path.splitext(args.output_file)
+    write_png(pathname + '_hat.png', tf.cast(x_hat, tf.uint8))
 
 def decompress(args):
   """Decompresses an image."""

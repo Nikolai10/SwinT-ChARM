@@ -1,6 +1,6 @@
 # SwinT-ChARM (TensorFlow 2)
 
-[<img src="https://colab.research.google.com/assets/colab-badge.svg" align="center">](TODO)
+[<img src="https://colab.research.google.com/assets/colab-badge.svg" align="center">](TBD: Version 2.0)
 
 This repository provides a TensorFlow implementation of SwinT-ChARM based on:
 
@@ -18,6 +18,7 @@ This repository provides a TensorFlow implementation of SwinT-ChARM based on:
 
 1. The number of model parameters now corresponds exactly to the reported number (32.6 million). We thank the authors for providing us with the official DeepSpeed log files.
 2. SwinT-ChARM now supports compression at different input resolutions (multiples of 256).
+3. We release a pre-trained model as proof of functional correctness.
 
 ***08/17/2022***
 
@@ -31,6 +32,28 @@ This project is based on:
 
 Note that this repository builds upon the official TF implementation of [Minnen et al.](https://github.com/tensorflow/compression/blob/master/models/ms2020.py), while Zhu et al. base their work on an
 unknown (possibly not publicly available) PyTorch reimplementation.
+
+## Example (kodim22)
+
+Original | SwinT-ChARM (β = 0.0003)
+
+:-------------------------:|:-------------------------:
+![kodim22.png](https://github.com/Nikolai10/SwinT-ChARM/blob/master/res/eval/kodim22.png) | ![kodim22_hat.png](https://github.com/Nikolai10/SwinT-ChARM/blob/master/res/eval/kodim22_hat.png)
+
+
+```python
+Mean squared error: 13.7772
+PSNR (dB): 36.74
+Multiscale SSIM: 0.9871
+Multiscale SSIM (dB): 18.88
+Bits per pixel: 0.9890
+```
+
+## Pretrained Models
+
+| Lagrangian multiplier (β) | link |
+| ----------- | -------------------------------- | 
+| 0.0003 | [TBD](...) |
 
 ## File Structure
 
