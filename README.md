@@ -14,6 +14,9 @@ This repository provides a TensorFlow implementation of SwinT-ChARM based on:
 
 ## Updates
 
+***09/06/2023***
+1. The high quality of this reimplementation has been confirmed in [EGIC, Section A.8.](https://arxiv.org/pdf/2309.03244v1.pdf). 
+
 ***10/09/2022***
 
 1. The number of model parameters now corresponds exactly to the reported number (32.6 million). We thank the authors for providing us with the official DeepSpeed log files.
