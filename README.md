@@ -14,6 +14,9 @@ This repository provides a TensorFlow implementation of SwinT-ChARM based on:
 
 ## Updates
 
+***10/06/2023***
+1. LIC-TCM (TensorFlow 2) is now available: https://github.com/Nikolai10/LIC-TCM (Liu et al. CVPR 2023 Highlight).
+
 ***09/06/2023***
 1. The high quality of this reimplementation has been confirmed in [EGIC, Section A.8.](https://arxiv.org/pdf/2309.03244v1.pdf). 
 
